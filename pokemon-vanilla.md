@@ -1,7 +1,7 @@
 # Pokémon App Project Log
 
 ## Project Overview
-**Project Name**: Pokémon Gallery App  
+**Project Name**: Pokémon Vanilla  
 **Deployed URL**: [Live on Vercel](https://pokemonvanilla.vercel.app)  
 **Description**: A simple web app that allows users to browse and search Pokémon, view detailed information about each Pokémon, including evolutions and a random flavor text entry, and enjoy a responsive user interface.
 
@@ -170,4 +170,4 @@
 ---
 
 ## Repository
-**GitHub Repo**: [Your Repository Link](https://github.com/yourusername/your-repo)
+**GitHub Repo**: [pokemon-vanilla](https://github.com/rooted92/pokemon-vanilla)
