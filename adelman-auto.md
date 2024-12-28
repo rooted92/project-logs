@@ -140,7 +140,74 @@
 
 ---
 
+### 9. **Email Integration: SendGrid to Postmark to Resend**
+**Problem**: Initially attempted to use SendGrid for transactional emails but encountered issues with email deliverability and setup. Switched to Postmark, but integration was still cumbersome.
+
+**Solution**: Transitioned to using React-Email with Resend, which streamlined email template creation and delivery.
+- Used React-Email to design and render email templates.
+- Integrated Resend’s API for sending verification emails.
+
+**New Skill**: Successfully implemented React-Email for modular and reusable email templates with Resend’s reliable email API.
+
+---
+
+### 10. **Database Choice: Supabase to MongoDB**
+**Problem**: Initially set up Supabase for handling data storage but found it to be too complex for the project's needs.
+
+**Solution**: Migrated to MongoDB, which was more suited for managing reviews and structured data.
+- Used Mongoose to define schemas and handle database interactions.
+- Set up a `Review` schema for user-submitted reviews with email verification.
+
+**Schema Definition**:
+```typescript
+const reviewSchema = new Schema({
+  created_at: { type: Date, default: Date.now },
+  first_name: { type: String, required: true },
+  last_name: { type: String, required: true },
+  city: { type: String, required: true },
+  review: { type: String, required: true },
+  rating: { type: Number, required: true, min: 1, max: 5 },
+  email: { type: String, required: true },
+  is_verified: { type: Boolean, default: false },
+  verification_token: { type: String, required: true, unique: true },
+});
+```
+**New Skill**: Learned to transition from Supabase to MongoDB efficiently and manage database schemas with Mongoose.
+---
+
+### 11. **Environment Variables and Production Issues**
+**Problem**: On production, the app was fetching data from a default `test` database despite the correct `MONGODB_URI` pointing to `adelman_auto`.
+
+**Solution**:
+- Identified that the issue was caused by stale environment variables.
+- Deleted and re-added the `MONGODB_URI` environment variable in Vercel.
+- Redeployed the app to ensure the new variables were correctly loaded.
+
+**New Skill**: Debugged environment variable issues and verified MongoDB connections in production environments.
+---
+
+### 12. **Form Submission and Verification Flow**
+**Problem**: Needed a secure way to handle user-submitted reviews with email verification.
+
+**Solution**:
+- Implemented a POST endpoint for review submissions:
+```typescript
+export async function POST(request: NextRequest) {
+  const { first_name, last_name, city, review, rating, email } = await request.json();
+  const verificationToken = crypto.randomBytes(32).toString('hex');
+  const newReview = new Review({
+    first_name, last_name, city, review, rating, email, verification_token: verificationToken,
+  });
+  await newReview.save();
+  // Send verification email
+}
+```
+- Created a GET endpoint to handle email verification by updating the `is_verified` field.
+
+**New Skill**: Learned to transition from Supabase to MongoDB efficiently and manage database schemas with Mongoose.
+---
+
 ## Next Steps
 1. Add animations for smoother user interactions.
-2. Explore further backend integrations (e.g., databases for quotes).
+2. Explore additional backend integrations, such as scheduling APIs for appointments.
 3. Improve SEO with dynamic meta tags and structured data.
